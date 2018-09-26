@@ -40,6 +40,7 @@ public class ByteBufferTest {
         System.out.println("--------Test reset----------");
         buffer.clear();
         buffer.position(5);
+        buffer.get(5);
         buffer.mark();
         buffer.position(10);
         System.out.println("before reset:" + buffer);

@@ -8,6 +8,8 @@ import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * @author lz
@@ -16,6 +18,8 @@ import java.util.Iterator;
 public class TelnetServer {
 
     private static final Integer PORT = 8090;
+
+    private static ExecutorService threadPool = Executors.newFixedThreadPool(10);
     private void telnetStart(){
         try {
             Selector selector = Selector.open();
@@ -40,8 +44,6 @@ public class TelnetServer {
                         iter.remove();
                     }else if((selectionKey.readyOps() & SelectionKey.OP_READ) == SelectionKey.OP_READ){
                         System.out.println("Receive read event");
-
-
 
                         SocketChannel socketChannel = (SocketChannel) selectionKey.channel();
                         ByteBuffer buffer = ByteBuffer.allocate(100);
