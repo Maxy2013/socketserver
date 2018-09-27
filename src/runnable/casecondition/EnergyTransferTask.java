@@ -25,12 +25,7 @@ public class EnergyTransferTask implements Runnable{
      */
     private int delay = 10;
 
-    /**
-     * 循环次数
-     */
-    private int times = 20;
-
-    public EnergyTransferTask(EnergySystem energySystem, int fromBox, double maxAmount) {
+        public EnergyTransferTask(EnergySystem energySystem, int fromBox, double maxAmount) {
         this.energySystem = energySystem;
         this.fromBox = fromBox;
         this.maxAmount = maxAmount;
@@ -40,6 +35,10 @@ public class EnergyTransferTask implements Runnable{
     public void run() {
         //能量转移任务
         try {
+            /**
+             * 循环次数
+             */
+            int times = 20;
             while (times > 0){
                 //获得随机的能量接收的盒子下标
                 int toBox = (int) (energySystem.getTotalBox() * Math.random());

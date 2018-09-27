@@ -61,7 +61,8 @@ public class EnergySystem {
             //如果from 中的能量小于需要转移的能量，直接返回结束
             //if (totalEnergy[from] < amount) return;//直接返回后，该线程还会继续申请CPU资源，增加程序的性能负担
             //应该使用while
-            //while保证
+            //while保证 在不满足条件的情况下，任务都会被阻拦，而不是继续竞争CPU的资源
+            //这些阻拦的线程将在 Wait set中等待
             while (totalEnergy[from] < amount){
                 try {
                     lockObj.wait();
@@ -75,6 +76,9 @@ public class EnergySystem {
             System.out.printf("从盒子[%d]转移%10.2f单位的能量到盒子[%d]", from, amount, to);
             totalEnergy[to] += amount;//往to 中转移 amount的能量
             System.out.printf("能量的总和是：%10.2f%n", getTotalEnergy());
+
+            //唤醒所有lockObj对象上等待的线程，让他们继续执行
+            lockObj.notifyAll();
         }
 
 
